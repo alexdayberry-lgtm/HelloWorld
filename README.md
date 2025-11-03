@@ -11,15 +11,45 @@ The workflow automatically builds a Docker image from a Java source file (`Hello
 - **Docker**
 - **GitHub Actions**
 - **Ubuntu Runner (CI/CD Environment)**
+ 
+## Dockerfile
+```dockerfile
+FROM openjdk:23
+WORKDIR /app
+COPY src/ /app/
+RUN javac *.java
+CMD ["java", "HelloWorld"]
+```
+GitHub Actions Workflow
 
-## Files and Structure
-HelloWorldDocker/
-│
-├── src/
-│ └── HelloWorld.java
-│
-├── Dockerfile
-│
-└── .github/
-└── workflows/
-└── docker.yml
+The workflow file .github/workflows/docker.yml automates the process:
+
+Logs in to Docker Hub using stored secrets (DOCKER_USERNAME, DOCKER_PASSWORD)
+
+Builds the Docker image tagged with the GitHub run number
+
+name: Build and Push to Docker Hub
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Log in to Docker Hub
+        run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
+
+      - name: Build Docker Image
+        run: docker build -t ${{ secrets.DOCKER_USERNAME }}/is147:${{ github.run_number }} .
+
+      - name: Push Docker Image
+        run: docker push ${{ secrets.DOCKER_USERNAME }}/is147:${{ github.run_number }}
+  ```
+
