@@ -51,5 +51,28 @@ jobs:
 
       - name: Push Docker Image
         run: docker push ${{ secrets.DOCKER_USERNAME }}/is147:${{ github.run_number }}
-  ```
+How to Run the App
 
+After the workflow completes:
+
+Pull your image from Docker Hub:
+
+docker pull your-dockerhub-username/is147:<tag>
+
+
+Run the image:
+```
+docker run your-dockerhub-username/is147:<tag>
+```
+
+Output:
+```
+Hello, Docker and Java! - from Alex Dayberry
+```
+Continuous Integration Benefits
+
+Automated Builds: No manual Docker build commands required.
+
+Consistent Deployments: Ensures every push results in a fresh, versioned image.
+
+Traceability: Each build uses the github.run_number tag for version history.
