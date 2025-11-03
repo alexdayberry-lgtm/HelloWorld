@@ -56,9 +56,9 @@ How to Run the App
 After the workflow completes:
 
 Pull your image from Docker Hub:
-
+```
 docker pull your-dockerhub-username/is147:<tag>
-
+```
 
 Run the image:
 ```
