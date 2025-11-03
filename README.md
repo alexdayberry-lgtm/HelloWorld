@@ -13,3 +13,13 @@ The workflow automatically builds a Docker image from a Java source file (`Hello
 - **Ubuntu Runner (CI/CD Environment)**
 
 ## Files and Structure
+HelloWorldDocker/
+│
+├── src/
+│ └── HelloWorld.java
+│
+├── Dockerfile
+│
+└── .github/
+└── workflows/
+└── docker.yml
